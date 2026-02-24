@@ -1,0 +1,277 @@
+---
+title: "Class 11 Structural Bioinformatics (pt2 AlphaFold)"
+author: "Erin McTavish PID: A17300519"
+format: pdf
+---
+
+## Background
+
+We saw last day that the main repository for biomolecular structure (the PDB database) only has ~250,000 entries.
+
+UnitProtKB (the main protein sequence database) has over 200 million entries!
+
+
+## AlphaFold
+
+In this hands-on session we will utilize AlphaFold to predict protein structure ffrom sequence (Jumper et al. 2021).
+
+Without the aid of such approaches, it can take years of expensive laboratory work to determine the structure of just one protein. With AlphaFold we can now accurately compute a typical protein structure in as little as ten minutes.
+
+
+## The EBI AlpaFold database
+
+The EBI AlphaFold database contains lots of computed structure models. It is increasingly likely that the structure you are interested in is already on this database.< https:://alphafold.ebi.ac.uk >
+
+There are 3 major outputs from AlphaFold
+
+1. A model of structure in **PDB** format.
+2. A **pLDDT score**: that tells us how canfident the model is for a given residue in your protein (High values are good, above 70)
+3. A **PAE score** that tells us about protein packing quality.  
+
+If you can't find a matching entry for the sequence you ar einterested in AFDB you can run AlphaFold yourself...
+
+
+## Running AlphaFold
+
+We will use ColabFold to run AlphaFold on our sequence <
+
+https:://github.com/sokrytpon/ColabFold >
+
+Figure from AlphaFold here!
+
+![](HIVPR_23119_0_HIVPR_23119_0_UNRELAXED_RANK_002_ALPHAFOLD2_MULTIMER_V3_MODEL_1_SEED_000.PDB-HIVPR_23119_0_HIVPR_23119_0_UNRELAXED_RANK_003_ALPHAFOLD2_MULTIMER_V3_MODEL_5_SEED_000.PDB-HIVPR_23119_0_HIVPR_23119_0_UNRELAXED_RANK_001_ALPHAFOLD2_.png)
+
+
+## Interpreting Results
+
+Custom analysis of resulting models
+
+We can read all the AlphaFold results into R and do more quantitive analysis than just view the structures in Mol-star:
+
+Read all the PDB models:
+```{r}
+library(bio3d)
+p <- read.pdb("hivpr_23119_0/hivpr_23119_0_unrelaxed_rank_001_alphafold2_multimer_v3_model_4_seed_000.pdb")
+p
+```
+```{r}
+pdb_files <- list.files("hivpr_23119_0/", pattern = ".pdb", full.names = T)
+pdbs <- pdbaln(pdb_files, fit=TRUE, exefile= "msa")
+```
+```{r}
+#library(bio3dview)
+#view.pdbs(pdbs)
+```
+How similar or different are my models?
+
+```{r}
+rd <- rmsd(pdbs)
+
+library(pheatmap)
+colnames(rd) <- paste0("m",1:5)
+rownames(rd) <- paste0("m",1:5)
+pheatmap(rd)
+```
+
+Now lets plot the pLDDT values across all models.
+
+```{r}
+library(bio3d)
+```
+
+
+```{r}
+# Read a reference PDB structure
+pdb <- read.pdb("1hsg")
+```
+```{r}
+plotb3(pdbs$b[1, ], typ = "l", lwd = 2, sse = pdb)
+points(pdbs$b[2, ], typ = "l", col = "red")
+points(pdbs$b[3, ], typ = "l", col = "blue")
+points(pdbs$b[4, ], typ = "l", col = "darkgreen")
+points(pdbs$b[5, ], typ = "l", col = "orange")
+```
+
+We can improve the superposition/fitting of our models by finding the most consistent “rigid core” common across all the models. For this we will use the core.find() function:
+
+```{r}
+core <- core.find(pdbs)
+```
+We can now use the identified core atom positions as a basis for a more suitable superposition and write out the fitted structures to a directory called corefit_structures:
+
+```{r}
+core.inds <- print(core, vol=0.5)
+```
+
+
+```{r}
+xyz <- pdbfit(pdbs, core.inds, outpath="corefit_structures")
+```
+
+```{r}
+library(bio3d)
+
+# Check current working directory
+getwd()
+
+# Create output directory if it does not already exist
+dir.create("corefit_structures", showWarnings = FALSE)
+
+# Confirm directory now exists
+list.files()
+
+# Find the rigid core across all models
+core <- core.find(pdbs)
+
+# Get core atom indices (prints summary to console)
+core.inds <- print(core, vol = 0.5)
+
+# Fit structures using the core and write PDB files to disk
+xyz <- pdbfit(pdbs, core.inds, outpath = "corefit_structures")
+
+# Confirm PDB files were written
+list.files("corefit_structures")
+```
+```{r}
+system("open corefit_structures")
+```
+
+![](HIVPR_23119_0_UNRELAXED_RANK_001_ALPHAFOLD2_MULTIMER_V3_MODEL_4_SEED_000.PDB_FLSQ.PDB-HIVPR_23119_0_UNRELAXED_RANK_002_ALPHAFOLD2_MULTIMER_V3_MODEL_1_SEED_000.PDB_FLSQ.PDB-HIVPR_23119_0_UNRELAXED_RANK_003_ALPHAFOLD2_MULTIMER_V3_MODEL_5_SEED.png)
+Now we can examine the RMSF between positions of the structure. RMSF is an often used measure of conformational variance along the structure:
+
+```{r}
+rf <- rmsf(xyz)
+
+plotb3(rf, sse=pdb)
+abline(v=100, col="gray", ylab="RMSF")
+```
+
+The first chain is largely very similar across the different models. However, the second chain is much more variable 
+
+##Predicted Alignment Error for domains
+
+Independent of the 3D structure, AlphaFold produces an output called Predicted Aligned Error (PAE). This is detailed in the JSON format result files, one for each model structure.
+
+Below we read these files and see that AlphaFold produces a useful inter-domain prediction for model 1 (and 2) but not for model 5 (or indeed models 3, 4, and 5):
+
+```{r}
+library(jsonlite)
+results_dir <- "hivpr_23119_0"
+
+pae_files <- list.files(
+  path = results_dir,
+  pattern = ".*model.*\\.json",
+  full.names = TRUE
+)
+pae_files
+```
+```{r}
+pae1 <- read_json(pae_files[1],simplifyVector = TRUE)
+pae2 <- read_json(pae_files[2], simplifyVector = TRUE)
+pae3 <- read_json(pae_files[3], simplifyVector = TRUE)
+pae4 <- read_json(pae_files[4], simplifyVector = TRUE)
+pae5 <- read_json(pae_files[5],simplifyVector = TRUE)
+
+attributes(pae1)
+```
+
+```{r}
+# Per-residue pLDDT scores 
+#  same as B-factor of PDB..
+head(pae1$plddt) 
+```
+The lower the PAE score the better. 
+
+```{r}
+pae1$max_pae
+```
+
+```{r}
+pae2$max_pae
+```
+
+```{r}
+pae3$max_pae
+```
+```{r}
+pae4$max_pae
+```
+```{r}
+pae5$max_pae
+```
+
+
+We can plot the N by N (where N is the number of residues) PAE scores with ggplot or with functions from the Bio3D package:
+
+```{r}
+plot.dmat(pae1$pae, 
+          xlab="Residue Position (i)",
+          ylab="Residue Position (j)")
+```
+
+```{r}
+plot.dmat(pae5$pae, 
+          xlab="Residue Position (i)",
+          ylab="Residue Position (j)",
+          grid.col = "black",
+          zlim=c(0,30))
+```
+
+We should really plot all of these using the same z range. Here is the model 1 plot again but this time using the same data range as the plot for model 5:
+
+```{r}
+plot.dmat(pae1$pae, 
+          xlab="Residue Position (i)",
+          ylab="Residue Position (j)",
+          grid.col = "black",
+          zlim=c(0,30))
+```
+
+##Residue conservation from alignment file
+
+```{r}
+aln_file <- list.files(path=results_dir,
+                       pattern=".a3m$",
+                        full.names = TRUE)
+aln_file
+```
+```{r}
+aln <- read.fasta(aln_file[1], to.upper = TRUE)
+```
+
+How many sequences are in this alignment
+
+```{r}
+dim(aln$ali)
+```
+
+We can score residue conservation in the alignment with the conserv() function.
+
+```{r}
+sim <- conserv(aln)
+```
+
+```{r}
+plotb3(sim[1:99], sse=trim.pdb(pdb, chain="A"),
+       ylab="Conservation Score")
+```
+
+Note the conserved Active Site residues D25, T26, G27, A28. These positions will stand out if we generate a consensus sequence with a high cutoff value:
+
+```{r}
+con <- consensus(aln, cutoff = 0.9)
+con$seq
+```
+We can map this conservation score to the Occupancy column of a PDB file for viewing in molecular viewer programs
+
+```{r}
+m1.pdb <- read.pdb(pdb_files[1])
+occ <- vec2resno(c(sim[1:99], sim[1:99]), m1.pdb$atom$resno)
+write.pdb(m1.pdb, o=occ, file="m1_conserv.pdb")
+```
+
+Here is an image of this data generated from and Mol* using coloring by Occupancy.
+
+![](M1_CONSERV.PDB.png)
+
+We can now clearly see the central conserved active site in this model where the natural peptide substrate (and small molecule inhibitors) would bind between domains
