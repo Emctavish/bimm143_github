@@ -11,9 +11,9 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -Class 06 [R functions](class06/Class06.pdf)
 
--Class 07 [Introduction to machine learning for Bioinformatics 1](class07/class07.Rproj)
+-PROBLEM Class 07 [Introduction to machine learning for Bioinformatics 1](class07/class07.Rproj)
 
--Class 08 [Unsupervised learning mini-project]()
+-Class 08 [Unsupervised learning mini-project](class08/Class08.qmd)
 
 -Class 09 []()
 
@@ -29,7 +29,7 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -Class 15 []()
 
--Class 16 []()
+-Class 16 (UNIX)
 
 -Class 17 []()
 
