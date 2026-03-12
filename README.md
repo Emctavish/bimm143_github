@@ -17,15 +17,15 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -Class 09 [Candy mini-project](class09/Class 9_ Candy Mini Project - Class09.pdf)
 
--Class 10 [Structural Bioinformatics (pt1)]()
+-Class 10 [Structural Bioinformatics (pt1)](class/10class10.pdf)
 
--Class 11 [Structural Bioinformatics (pt2 AlphaFold)]()
+-Class 11 [Structural Bioinformatics (pt2 AlphaFold)](class11/class11.qmd)
 
--Class 12 [Genome informatics and high throughput sequencing]()
+-Class 12 [Genome informatics and high throughput sequencing](class12/class12pt1.qmd)
 
--Class 13 [Transcriptomics, RNA-Seq analysis, and the interpretation of gene lists]()
+-Class 13 [Transcriptomics, RNA-Seq analysis, and the interpretation of gene lists](class13/class13.qmd)
 
--Class 14 [RNA-Seq mini project]()
+-Class 14 [RNA-Seq mini project](class14/class14.qmd)
 
 -Class 15 [Hands-on with Git and GitHub]()
 
