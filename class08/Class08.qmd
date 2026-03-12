@@ -1,0 +1,20 @@
+---
+title: "Class 08: Breast Cancer Mini Project"
+author: "Erin McTavish PID: A17300519"
+format: html
+---
+
+## Background
+
+In today's class we will apply the methods and techniques clustering and PCA to help make sense of a real world breast cancer FNA (fine needle aspirations: digitized images of the cell focusing on the nucleus) biopsy. 
+
+
+## Data Import
+
+We start by importing our data. It is a CSV file so we will use the `read.csv()` function.
+
+```{r}
+read.csv(file="WisconsinCancer.csv")
+read.table(file="WisconsinCancer.csv", sep=",")
+```
+
