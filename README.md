@@ -15,7 +15,7 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -Class 08 [Unsupervised learning mini-project](class08/Class08work.pdf)
 
--PROBLEM Class 09 [Candy mini-project](class09/class09.pdf)
+-Class 09 [Candy mini-project](class09/class09.pdf)
 
 -Class 10 [Structural Bioinformatics (pt1)](class10/class10.pdf)
 
@@ -35,4 +35,4 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -Class 18 [Investigating pertussis resurgence mini-project](class18/class18work.pdf)
 
-- PROBLEM Class 19 [Cancer mutation analysis mini-project](class19/lab19.pdf)
+-Class 19 [Cancer mutation analysis mini-project](class19/lab19.pdf)
