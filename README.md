@@ -13,9 +13,9 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -Class 07 [Introduction to machine learning for Bioinformatics 1](class07/class07.pdf)
 
-- PROBLEM Class 08 [Unsupervised learning mini-project](class08/Class08.qmd)
+- PROBLEM Class 08 [Unsupervised learning mini-project](class08/Class08work.pdf)
 
-- PROBLEM Class 09 [Candy mini-project](class09/Class 9_ Candy Mini Project - Class09.pdf)
+- PROBLEM Class 09 [Candy mini-project](class09/class09.pdf)
 
 -Class 10 [Structural Bioinformatics (pt1)](class10/class10.pdf)
 
