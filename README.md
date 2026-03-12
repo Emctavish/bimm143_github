@@ -15,7 +15,7 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -PROBLEM Class 08 [Unsupervised learning mini-project](class08/Class 08_ Breast Cancer Mini Project.pdf)
 
--Class 09 [Candy mini-project](class09/Class 9_ Candy Mini Project - Class09.pdf)
+- PROBLEM Class 09 [Candy mini-project](class09/Class 9_ Candy Mini Project - Class09.pdf)
 
 -Class 10 [Structural Bioinformatics (pt1)](class/10class10.pdf)
 
