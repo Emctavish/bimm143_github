@@ -13,7 +13,7 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -PROBLEM Class 07 [Introduction to machine learning for Bioinformatics 1](class07/class07.Rproj)
 
-- PROBLEM Class 08 [Unsupervised learning mini-project](class08/Class 08_ Breast Cancer Mini Project.pdf)
+-PROBLEM Class 08 [Unsupervised learning mini-project](class08/Class 08_ Breast Cancer Mini Project.pdf)
 
 -Class 09 [Candy mini-project](class09/Class 9_ Candy Mini Project - Class09.pdf)
 
@@ -27,12 +27,12 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -Class 14 [RNA-Seq mini project](class14/class14.qmd)
 
--Class 15 [Hands-on with Git and GitHub]()
+-Class 15 [Hands-on with Git and GitHub] Git hub link (this link!!)
 
 -Class 16 (UNIX)
 
--Class 17 [Analyzing sequencing data in the cloud]()
+-Class 17 [Analyzing sequencing data in the cloud](class17/Class 17 Downstream analysis.pdf)
 
--Class 18 [Investigating pertussis resurgence mini-project]()
+-Class 18 [Investigating pertussis resurgence mini-project](class18/class18.qmd)
 
--Class 19 [Cancer mutation analysis mini-project]()
+- PROBLEM Class 19 [Cancer mutation analysis mini-project]()
