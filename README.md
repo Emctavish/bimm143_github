@@ -13,7 +13,7 @@ My classwork for [BIMM 143](https://bioboot.github.io/bimm143_W26/schedule/#14) 
 
 -PROBLEM Class 07 [Introduction to machine learning for Bioinformatics 1](class07/class07.Rproj)
 
--Class 08 [Unsupervised learning mini-project](class08/Class08.qmd)
+-Class 08 [Unsupervised learning mini-project](class08/Class 08_ Breast Cancer Mini Project.pdf)
 
 -Class 09 []()
 
